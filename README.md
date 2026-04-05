@@ -9,6 +9,8 @@ Los mismos sirven de ayuda para correr un nodo Bitcoin Core y la suite de herram
 Esta versión en español es un fork revisado y actualizado del trabajo de [HannahMR](https://github.com/HannahMR/run-litd). Gracias por inspirarnos y ser tan clara!
 Se basa a su vez en el repositorio de [Alex Bosworth](https://github.com/alexbosworth/run-lnd/). Allí puede encontrar información más detallada sobre la configuración de un nodo Lightning.
 
+**Esta guía incluye una variante para ejecutarse desde una Máquina Virtual (VM) de Lunanode**, diseñada para quienes tienen limitaciones de hardware o conectividad en sus equipos locales. La versión VM permite correr el nodo en un servidor remoto, aprovechando los recursos de Lunanode sin necesidad de hardware propio.
+
 ¡Importante!: Estos ejemplos y scripts están diseñados para ayudar a los desarrolladores a configurar todo rápidamente para comenzar las pruebas y el desarrollo de aplicaciones. Por favor, no confíe en estos archivos para su entorno de producción.
 
 Puede ver un video en inglés de demostración de estos scripts [aquí](https://www.youtube.com/watch?v=lopHP_nF0tE)
@@ -34,9 +36,23 @@ Las versiones actuales de las listas de verificación y scripts instalan...
 
 Esta configuración está bien testeada en servidores barebone o virtulaes, con al menos este nivel de recursos:
 
-- 2+ Núcleos de CPU
-- 80GB+ de Almacenamiento (nodo podado a 50GB)
-- 2GB+ de RAM
+- 1 vCPU
+- 20 GB de Almacenamiento (nodo podado a 2 GB)
+- 1 GB de RAM
+
+### Ejecutando desde una VM de Lunanode
+
+Si tienes limitaciones de hardware o conectividad en tu equipo local, puedes ejecutar este nodo desde una **Máquina Virtual de Lunanode**. Esta opción es ideal para quienes:
+
+- Tienen equipos con recursos limitados (menos de 4 GB de RAM)
+- Quieren evitar problemas de conectividad o corte de luz
+- Prefieren tener el nodo corriendo en un servidor cloud confiable
+
+Para ejecutar desde una VM de Lunanode, simplemente sigue esta guía pero provisiona tu servidor en Lunanode en lugar de usar un equipo físico o VPS local. Los requisitos mínimos para una VM de Lunanode son los mismos que para un servidor barebone:
+
+- 1 vCPU
+- 20 GB de Almacenamiento (nodo podado a 2 GB)
+- 1 GB de RAM (el script configura `dbcache=450` para optimizar el uso de memoria en sistemas con menos de 4 GB)
 
 Deberá aumentar estos recursos cuando ejecute un servidor de producción o cuando ejecute un nodo completo.
 
@@ -121,7 +137,7 @@ Por favor, revise los valores predeterminados incluidos en el archivo de configu
 
 Aquí hay dos scripts para elegir, uno que instala desde el código fuente, **bitcoind_setup.sh**, y otro que instala un binario, **bitcoind_setup_binary.sh**. Cualquiera que sea el script que elija, querrá ejecutarlo con el nuevo usuario "ubuntu" que se creó en el proceso de configuración del servidor.
 
-Estos scripts ejecutan de forma predeterminada un nodo podado, configurado en 50 GB. Si desea ejecutar un nodo completo o almacenar los datos de la cadena de bloques en un disco adjunto, deberá editar el script en consecuencia o de forma posterior el archivo **bitcoin.conf**.
+Estos scripts ejecutan de forma predeterminada un nodo podado, configurado en 2 GB. Si desea ejecutar un nodo completo o almacenar los datos de la cadena de bloques en un disco adjunto, deberá editar el script en consecuencia o de forma posterior el archivo **bitcoin.conf**.
 
 Al ejecutar un nodo completo en mainnet, el servidor debe tener al menos 800 GB. Es común utilizar un disco extra para toda la Blockchain. Cuando haga eso, deberá montar el disco extra y luego agregar la siguiente línea a su archivo **bitcoin.conf**.
 
@@ -129,7 +145,7 @@ Al ejecutar un nodo completo en mainnet, el servidor debe tener al menos 800 GB.
 
 Al ejecutar un nodo podado, la siguiente línea debe estar descomentada en el archivo **bitcoin.conf**. Es la opción por defecto del script.
 
-```prune=50000 # Podar a 50GB```
+```prune=2000 # Podar a 2GB```
 
 Ambos scripts también ejecutan comprobaciones para ver lo que se ha hecho a medida que avanzan, por lo que deberían ser seguros para ejecutar varias veces en caso de que alguna ejecución se haya interrumpido.
 
