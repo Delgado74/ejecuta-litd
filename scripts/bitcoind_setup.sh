@@ -113,8 +113,8 @@ cat <<EOF > $BITCOIN_CONF
 # Ejecutar en modo demonio sin un shell interactivo
 daemon=1
 
-# Establecer el número de megabytes de RAM a usar, establecer como en el 50% de la memoria disponible
-dbcache=1000
+# Establecer el número de megabytes de RAM a usar (450MB para sistemas con menos de 4GB de RAM)
+dbcache=450
 
 # Añadir visibilidad a la mempool y llamadas RPC para la depuración potencial de LND
 debug=mempool
